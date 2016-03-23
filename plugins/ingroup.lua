@@ -122,7 +122,7 @@ function check_member_group(cb_extra, success, result)
       end
       data[tostring(groups)][tostring(msg.to.id)] = msg.to.id
       save_data(_config.moderation.data, data)
-      return send_large_msg(receiver, 'شما صاحب گروه شدید')
+      return send_large_msg(receiver, 'مبارکت باشه گروه مال تو شد')
     end
   end
 end
@@ -228,7 +228,7 @@ end
 --End Check Member
 local function show_group_settingsmod(msg, data, target)
  	if not is_momod(msg) then
-    	return "فقط مدیران"
+    	return "برای تو مجاز نیست"
   	end
   	local data = load_data(_config.moderation.data)
     if data[tostring(msg.to.id)] then
@@ -298,17 +298,17 @@ end
 
 local function set_descriptionmod(msg, data, target, about)
   if not is_momod(msg) then
-    return "قفط مدیران"
+    return "برای تو مجاز نیست"
   end
   local data_cat = 'توضیحات'
   data[tostring(target)][data_cat] = about
   save_data(_config.moderation.data, data)
-  return 'توضیحات گروه به این متن تغییر یافت:\n'..about
+  return 'توضیحات گروه با موفقیت تغییر یافت:\n'..about
 end
 local function get_description(msg, data)
   local data_cat = 'توضیحات'
   if not data[tostring(msg.to.id)][data_cat] then
-    return 'توضیحی موجود نیست'
+    return 'توضیحی ثبت نشده'
   end
   local about = data[tostring(msg.to.id)][data_cat]
   local about = string.gsub(msg.to.print_name, "_", " ")..':\n\n'..about
@@ -316,39 +316,39 @@ local function get_description(msg, data)
 end
 local function lock_group_join(msg, data, target)
   if not is_momod(msg) then
-    return "قفط مدیران"
+    return "برای تو مجاز نیست"
   end
   local group_join_lock = data[tostring(target)]['settings']['lock_join']
   if group_join_lock == 'yes' then
-    return 'ورود از قبل قفل است'
+    return 'ورود با لینک قبلا قفل شده بود'
   else
     data[tostring(target)]['settings']['lock_join'] = 'yes'
     save_data(_config.moderation.data, data)
-    return 'ورود قفل شد'
+    return 'ورود با لینک با موفقیت قفل شد'
   end
 end
 
 local function unlock_group_join(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران"
+    return "برای تو مجاز نیست"
   end
   local group_join_lock = data[tostring(target)]['settings']['lock_join']
   if group_join_lock == 'no' then
-    return 'ورود از قبل آزاد است'
+    return 'ورود با لینک قبلا باز بود'
   else
     data[tostring(target)]['settings']['lock_join'] = 'no'
     save_data(_config.moderation.data, data)
-    return 'ورود آزاد شد'
+    return 'ورود با لینک باز شد'
   end
 end
 
 local function lock_group_tag(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران❗️"
+    return "برای تو مجاز نیست :/️"
   end
   local group_tag_lock = data[tostring(target)]['settings']['tag']
   if group_tag_lock == 'yes' then
-    return 'تگ کردن از قبل قفل است🔒'
+    return 'تگ کردن قفل شد🔒'
   else
     data[tostring(target)]['settings']['tag'] = 'yes'
     save_data(_config.moderation.data, data)
@@ -358,11 +358,11 @@ end
 
 local function unlock_group_tag(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران"
+    return "برای تو مجاز نیست :/"
   end
   local group_tag_lock = data[tostring(target)]['settings']['tag']
   if group_tag_lock == 'no' then
-    return 'تگ کردن از قبل آزاد است🔓'
+    return 'تگ کردن از قفل بود🔓'
   else
     data[tostring(target)]['settings']['tag'] = 'no'
     save_data(_config.moderation.data, data)
@@ -372,7 +372,7 @@ end
 
 local function lock_group_english(msg, data, target)
   if not is_momod(msg) then
-    return "قفط مدیران❗️"
+    return "برای تو مجاز نیست :/️"
   end
   local group_english_lock = data[tostring(target)]['settings']['lock_english']
   if group_english_lock == 'yes' then
@@ -386,7 +386,7 @@ end
 
 local function unlock_group_english(msg, data, target)
   if not is_momod(msg) then
-    return "قفط مدیران❗️"
+    return "برای تو مجاز نیست :/️"
   end
   local group_english_lock = data[tostring(target)]['settings']['lock_english']
   if group_english_lock == 'no' then
@@ -400,7 +400,7 @@ end
 
 local function lock_group_badw(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران❗️"
+    return "برای تو مجاز نیست :/️"
   end
   local group_badw_lock = data[tostring(target)]['settings']['lock_badw']
   if group_badw_lock == 'yes' then
@@ -414,7 +414,7 @@ end
 
 local function unlock_group_badw(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران❗️"
+    return "برای تو مجاز نیست :/️"
   end
   local group_badw_lock = data[tostring(target)]['settings']['lock_badw']
   if group_badw_lock == 'no' then
@@ -428,7 +428,7 @@ end
 
 local function lock_group_link(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران❗️"
+    return "برای تو مجاز نیست :/️"
   end
   local group_link_lock = data[tostring(target)]['settings']['lock_link']
   if group_link_lock == 'yes' then
@@ -442,7 +442,7 @@ end
 
 local function unlock_group_link(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران❗️"
+    return "برای تو مجاز نیست :/️"
   end
   local group_link_lock = data[tostring(target)]['settings']['lock_link']
   if group_link_lock == 'no' then
@@ -456,7 +456,7 @@ end
 
 local function lock_group_english(msg, data, target)
   if not is_momod(msg) then
-    return "فقط برای مدیران❗️"
+    return "برای تو مجاز نیست :/️"
   end
   local group_english_lock = data[tostring(target)]['settings']['lock_english']
   if group_english_lock == 'yes' then
@@ -470,7 +470,7 @@ end
 
 local function unlock_group_english(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران❗️"
+    return "برای تو مجاز نیست :/️"
   end
   local group_english_lock = data[tostring(target)]['settings']['lock_english']
   if group_english_lock == 'no' then
@@ -484,7 +484,7 @@ end
 
 local function lock_group_bots(msg, data, target)
   if not is_momod(msg) then
-    return "قفط مدیران"
+    return "برای تو مجاز نیست :/"
   end
   local group_bots_lock = data[tostring(target)]['settings']['lock_bots']
   if group_bots_lock == 'yes' then
@@ -498,7 +498,7 @@ end
 
 local function unlock_group_bots(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران"
+    return "برای تو مجاز نیست :/"
   end
   local group_bots_lock = data[tostring(target)]['settings']['lock_bots']
   if group_bots_lock == 'no' then
@@ -512,7 +512,7 @@ end
 
 local function lock_group_namemod(msg, data, target)
   if not is_momod(msg) then
-    return "فقط برای مدیران"
+    return "برای تو مجاز نیست :/"
   end
   local group_name_set = data[tostring(target)]['settings']['set_name']
   local group_name_lock = data[tostring(target)]['settings']['lock_name']
@@ -527,7 +527,7 @@ local function lock_group_namemod(msg, data, target)
 end
 local function unlock_group_namemod(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران"
+    return "برای تو مجاز نیست :/"
   end
   local group_name_set = data[tostring(target)]['settings']['set_name']
   local group_name_lock = data[tostring(target)]['settings']['lock_name']
@@ -545,7 +545,7 @@ local function lock_group_floodmod(msg, data, target)
   end
   local group_flood_lock = data[tostring(target)]['settings']['flood']
   if group_flood_lock == 'yes' then
-    return 'ارسال پیام سریع ممنوع از قبل ممنوع بود'
+    return 'ارسال اسپم از قبل قفل شده بود'
   else
     data[tostring(target)]['settings']['flood'] = 'yes'
     save_data(_config.moderation.data, data)
@@ -569,7 +569,7 @@ end
 
 local function lock_group_membermod(msg, data, target)
   if not is_momod(msg) then
-    return "فقط برای مدیران!"
+    return "برای تو مجاز نیست :/"
   end
   local group_member_lock = data[tostring(target)]['settings']['lock_member']
   if group_member_lock == 'yes' then
@@ -583,7 +583,7 @@ end
 
 local function unlock_group_membermod(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران"
+    return "برای تو مجاز نیست :/"
   end
   local group_member_lock = data[tostring(target)]['settings']['lock_member']
   if group_member_lock == 'no' then
@@ -597,7 +597,7 @@ end
 
 local function lock_group_leave(msg, data, target)
   if not is_momod(msg) then
-    return "فقط برای مدیران"
+    return "برای تو مجاز نیست :/"
   end
   local leave_ban = data[tostring(msg.to.id)]['settings']['leave_ban']
   if leave_ban == 'yes' then
@@ -625,7 +625,7 @@ end
 
 local function lock_group_media(msg, data, target)
   if not is_momod(msg) then
-    return "قفط مدیران"
+    return "برای تو مجاز نیست :/"
   end
   local group_media_lock = data[tostring(target)]['settings']['lock_media']
   if group_media_lock == 'yes' then
@@ -639,7 +639,7 @@ end
 
 local function unlock_group_media(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران"
+    return "برای تو مجاز نیست :/"
   end
   local group_media_lock = data[tostring(target)]['settings']['lock_media']
   if group_media_lock == 'no' then
@@ -653,7 +653,7 @@ end
 
 local function lock_group_share(msg, data, target)
   if not is_momod(msg) then
-    return "قفط مدیران"
+    return "برای تو مجاز نیست :/"
   end
   local group_share_lock = data[tostring(target)]['settings']['lock_share']
   if group_share_lock == 'yes' then
@@ -667,7 +667,7 @@ end
 
 local function unlock_group_share(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران"
+    return "برای شما مجاز نیست :/"
   end
   local group_share_lock = data[tostring(target)]['settings']['lock_share']
   if group_share_lock == 'no' then
@@ -681,7 +681,7 @@ end
 
 local function unlock_group_photomod(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران"
+    return "برای تو مجاز نیست :/"
   end
   local group_photo_lock = data[tostring(target)]['settings']['lock_photo']
   if group_photo_lock == 'no' then
@@ -695,12 +695,12 @@ end
 
 local function set_rulesmod(msg, data, target)
   if not is_momod(msg) then
-    return "فقط مدیران"
+    return "برای تو مجاز نیست :/"
   end
   local data_cat = 'قوانین'
   data[tostring(target)][data_cat] = rules
   save_data(_config.moderation.data, data)
-  return 'قوانین گروه به این متن تغییر یافت:\n'..rules
+  return 'قوانین گروه با موفقیت ثبت و بروزرسانی شد:\n'..rules
 end
 local function modadd(msg)
   -- superuser and admins only (because sudo are always has privilege)
@@ -1621,64 +1621,64 @@ return {
   "^(لینک جدید)$",
   "^(لینک)$",
   "^(لینک خصوصی)$",
-  "^(setversion) (.*)$",
-  "^(setgroup) (.*)$",
-  "^(add)$",
-  "^(add) (realm)$",
-  "^(rem)$",
-  "^(rem) (realm)$",
-  "^(rules)$",
-  "^(about)$",
-  "^(setname) (.*)$",
-  "^(setphoto)$",
-  "^(promote) (.*)$",
-  "^(promote)",
-  "^(clean) (.*)$",
-  "^(demote) (.*)$",
-  "^(demote)",
-  "^(set) ([^%s]+) (.*)$",
-  "^(lock) (.*)$",
-  "^(setleader) (%d+)$",
-  "^(setleader)",
-  "^(owner)$",
-  "^(res) (.*)$",
-  "^(setgpleader) (%d+) (%d+)$",
-  "^(unlock) (.*)$",
-  "^(setflood) (%d+)$",
-  "^(settings)$",
-  "^(modlist)$",
-  "^(newlink)$",
-  "^(link)$",
-  "^(kickinactive)$",
-  "^(kickinactive) (%d+)$",
-  "^(linkpv)$",
-  "^[!/#](add)$",
-  "^[!/#](add) (realm)$",
-  "^[!/#](rem)$",
-  "^[!/#](rem) (realm)$",
-  "^[!/#](rules)$",
-  "^[!/#](about)$",
-  "^[!/#](setname) (.*)$",
-  "^[!/#](setphoto)$",
-  "^[!/#](promote) (.*)$",
-  "^[!/#](promote)",
-  "^[!/#](clean) (.*)$",
-  "^[!/#](demote) (.*)$",
-  "^[!/#](demote)",
-  "^[!/#](set) ([^%s]+) (.*)$",
-  "^[!/#](lock) (.*)$",
-  "^[!/#](setleader) (%d+)$",
-  "^[!/#](setleader)",
-  "^[!/#](owner)$",
-  "^[!/#](res) (.*)$",
-  "^[!/#](setgpleader) (%d+) (%d+)$",
-  "^[!/#](unlock) (.*)$",
-  "^[!/#](setflood) (%d+)$",
-  "^[!/#](settings)$",
-  "^[!/#](modlist)$",
-  "^[!/#](newlink)$",
-  "^[!/#](link)$",
-  "^[!/#](linkpv)$",
+  "^([Ss]etversion) (.*)$",
+  "^([Ss]etgroup) (.*)$",
+  "^([Aa]dd)$",
+  "^([Aa]dd) (realm)$",
+  "^([Rr]em)$",
+  "^([Rr]em) (realm)$",
+  "^([Rr]ules)$",
+  "^([Aa]bout)$",
+  "^[Ss]etname) (.*)$",
+  "^([Ss]etphoto)$",
+  "^([Pp]romote) (.*)$",
+  "^([Pp]romote)",
+  "^([Cc]lean) (.*)$",
+  "^([Dd]emote) (.*)$",
+  "^([Dd]emote)",
+  "^([Ss]et) ([^%s]+) (.*)$",
+  "^([Ll]ock) (.*)$",
+  "^([Ss]etleader) (%d+)$",
+  "^([Ss]etleader)",
+  "^([Oo]wner)$",
+  "^([Rr]es) (.*)$",
+  "^([Ss]etgpleader) (%d+) (%d+)$",
+  "^([Uu]nlock) (.*)$",
+  "^([Ss]etflood) (%d+)$",
+  "^([Ss]ettings)$",
+  "^([Mm]odlist)$",
+  "^([Nn]ewlink)$",
+  "^([Ll]ink)$",
+  "^([Kk]ickinactive)$",
+  "^([Kk]ickinactive) (%d+)$",
+  "^([Ll]inkpv)$",
+  "^[!/#$*]([Aa]dd)$",
+  "^[!/#$*]([Aa]dd) (realm)$",
+  "^[!/#$*]([Rr]em)$",
+  "^[!/#$*]([Rr]em) (realm)$",
+  "^[!/#$*]([Rr]ules)$",
+  "^[!/#$*]([Aa]bout)$",
+  "^[!/#$*]([Ss]etname) (.*)$",
+  "^[!/#$*]([Pp]etphoto)$",
+  "^[!/#$*]([Pp]romote) (.*)$",
+  "^[!/#$*]([Pp]romote)",
+  "^[!/#$*](Cc]lean) (.*)$",
+  "^[!/#$*]([Dd]emote) (.*)$",
+  "^[!/#$*]([Dd]emote)",
+  "^[!/#$*]([Ss]et) ([^%s]+) (.*)$",
+  "^[!/#$*]([Ll]ock) (.*)$",
+  "^[!/#$*]([Ss]etleader) (%d+)$",
+  "^[!/#$*]([Ss]etleader)",
+  "^[!/#$*]([Oo]wner)$",
+  "^[!/#$*]([Rr]es) (.*)$",
+  "^[!/#$*]([Ss]etgpleader) (%d+) (%d+)$",
+  "^[!/#$*]([Uu]nlock) (.*)$",
+  "^[!/#$*]([Ss]etflood) (%d+)$",
+  "^[!/#$*]([Ss]ettings)$",
+  "^[!/#$*]([Mm]odlist)$",
+  "^[!/#$*]([Nn]ewlink)$",
+  "^[!/#$*]([Ll]ink)$",
+  "^[!/#$*]([Ll]inkpv)$",
   "%[(photo)%]",
   "^!!tgservice (.+)$",
   },
